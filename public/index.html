@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Agente TORMENTA - Cena con Delitto</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <div class="screen active" id="screen-home">
+    <div class="fog"></div>
+    <div class="logo-box">
+      <div class="logo-icon">🕵️‍♀️</div>
+      <h1 class="logo-title">AGENTE<br><span class="gold">TORMENTA</span></h1>
+      <div class="logo-sub">CENA CON DELITTO</div>
+      <div class="logo-line"></div>
+      <p class="logo-tagline">Un mistero guidato dall'Intelligenza Artificiale</p>
+      <p class="logo-players">3-8 Giocatori &bull; Sui vostri telefoni</p>
+    </div>
+    <div class="home-buttons">
+      <button class="btn gold-btn" onclick="goTo('screen-create')">🏠 CREA PARTITA</button>
+      <button class="btn dark-btn" onclick="goTo('screen-join')">🚪 UNISCITI</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-create">
+    <button class="back-btn" onclick="goTo('screen-home')">&#8592; Indietro</button>
+    <h2 class="screen-title">🏠 Nuova Partita</h2>
+    <label class="field-label">Il tuo nome</label>
+    <input type="text" id="host-name" class="field-input" placeholder="Come ti chiami?" maxlength="15">
+    <label class="field-label">Ambientazione</label>
+    <div class="ambiance-grid">
+      <div class="amb-card selected" data-amb="villa" onclick="selectAmb(this)">🏚️<br><small>Villa Gotica</small></div>
+      <div class="amb-card" data-amb="treno" onclick="selectAmb(this)">🚂<br><small>Orient Express</small></div>
+      <div class="amb-card" data-amb="nave" onclick="selectAmb(this)">🚢<br><small>Nave Crociera</small></div>
+      <div class="amb-card" data-amb="castello" onclick="selectAmb(this)">🏰<br><small>Castello</small></div>
+      <div class="amb-card" data-amb="teatro" onclick="selectAmb(this)">🎭<br><small>Teatro Opera</small></div>
+      <div class="amb-card" data-amb="hotel" onclick="selectAmb(this)">🏨<br><small>Hotel Anni '20</small></div>
+    </div>
+    <label class="field-label">Durata</label>
+    <div class="duration-row">
+      <button class="dur-btn selected" data-dur="30" onclick="selectDur(this)">⚡ 30 min</button>
+      <button class="dur-btn" data-dur="60" onclick="selectDur(this)">🕐 1 ora</button>
+    </div>
+    <button class="btn gold-btn full-btn" onclick="createRoom()">CREA STANZA</button>
+    <div class="error-box" id="create-err"></div>
+  </div>
+
+  <div class="screen" id="screen-join">
+    <button class="back-btn" onclick="goTo('screen-home')">&#8592; Indietro</button>
+    <h2 class="screen-title">🚪 Unisciti</h2>
+    <label class="field-label">Il tuo nome</label>
+    <input type="text" id="join-name" class="field-input" placeholder="Come ti chiami?" maxlength="15">
+    <label class="field-label">Codice stanza</label>
+    <input type="text" id="join-code" class="field-input code-input" placeholder="ES: A1B2C3" maxlength="6">
+    <button class="btn gold-btn full-btn" onclick="joinRoom()">ENTRA</button>
+    <div class="error-box" id="join-err"></div>
+  </div>
+
+  <div class="screen" id="screen-lobby">
+    <h2 class="screen-title">🎭 Sala d'Attesa</h2>
+    <div class="code-box">
+      <span class="code-label">Codice:</span>
+      <span class="code-value" id="lobby-code">------</span>
+      <button class="copy-btn" onclick="copyCode()">📋</button>
+    </div>
+    <p class="share-hint">📱 Condividi questo codice con i tuoi amici!</p>
+    <div id="players-list" class="players-list"></div>
+    <div id="host-area" class="hidden">
+      <button class="btn gold-btn full-btn big-btn" id="start-btn" onclick="startGame()">🎮 AVVIA PARTITA</button>
+      <p class="hint-text">Servono almeno 3 giocatori</p>
+    </div>
+    <div id="guest-area" class="hidden">
+      <div class="waiting-box"><div class="waiting-dot"></div><p>In attesa che l'host avvii...</p></div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-loading">
+    <div class="loading-content">
+      <div class="logo-icon pulse">🕵️‍♀️</div>
+      <h2 class="gold">L'Agente TORMENTA sta preparando il caso...</h2>
+      <p class="loading-sub">Generazione della storia in corso</p>
+      <div class="loading-bar"><div class="loading-fill"></div></div>
+      <p class="loading-tips" id="loading-tip">Preparate i vostri migliori istinti investigativi...</p>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
