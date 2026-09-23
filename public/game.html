@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Agente TORMENTA - In Gioco</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="game-body">
+  <header class="g-header">
+    <div class="g-header-l"><span class="phase-tag" id="phase-tag">🕵️‍♀️</span></div>
+    <div class="g-header-c">AGENTE TORMENTA</div>
+    <div class="g-header-r">
+      <button class="icon-btn" onclick="openPanel('panel-char')">👤</button>
+      <button class="icon-btn" onclick="openPanel('panel-notes')">📝</button>
+      <button class="icon-btn" onclick="openPanel('panel-ai')">🕵️‍♀️</button>
+    </div>
+  </header>
+  <main class="g-main" id="g-main">
+    <div class="narr-card" id="narr-card"><p>Caricamento...</p></div>
+    <div class="clue-card hidden" id="clue-card"><h4>🔍 Indizio Scoperto</h4><p id="clue-text"></p></div>
+    <div class="priv-card hidden" id="priv-card"><h4>🤫 Solo per i tuoi occhi</h4><p id="priv-text"></p></div>
+    <div class="timer-box"><div class="timer" id="timer">--:--</div></div>
+    <div class="chat-box">
+      <div class="chat-msgs" id="chat-msgs"></div>
+      <div class="chat-bar">
+        <input type="text" id="chat-in" placeholder="Parla in personaggio..." onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="send-btn" onclick="sendMsg()">📨</button>
+        <button class="mic-btn" id="mic-btn" onclick="toggleMic()">🎤</button>
+      </div>
+    </div>
+    <div class="vote-box hidden" id="vote-box">
+      <h2 class="gold">🗳️ Chi è l'assassino?</h2>
+      <p>Discutete e poi votate!</p>
+      <div class="vote-grid" id="vote-grid"></div>
+      <p class="vote-status" id="vote-status"></p>
+    </div>
+    <div class="result-box hidden" id="result-box"><div id="result-content"></div></div>
+  </main>
+
+  <div class="panel hidden" id="panel-char">
+    <div class="panel-head"><h3>👤 Il Tuo Personaggio</h3><button class="close-btn" onclick="closePanel('panel-char')">&#10005;</button></div>
+    <div class="panel-body" id="char-info"></div>
+  </div>
+  <div class="panel hidden" id="panel-notes">
+    <div class="panel-head"><h3>📝 Appunti Segreti</h3><button class="close-btn" onclick="closePanel('panel-notes')">&#10005;</button></div>
+    <div class="panel-body"><textarea id="notes-area" placeholder="Scrivi qui i tuoi sospetti e deduzioni..."></textarea></div>
+  </div>
+  <div class="panel hidden" id="panel-ai">
+    <div class="panel-head"><h3>🕵️‍♀️ Agente TORMENTA</h3><button class="close-btn" onclick="closePanel('panel-ai')">&#10005;</button></div>
+    <div class="panel-body">
+      <div class="ai-msgs" id="ai-msgs"><div class="ai-bubble bot">Buonasera. Sono l'Agente TORMENTA. Chiedetemi indizi... se ne avete il coraggio. 😏</div></div>
+      <div class="ai-bar">
+        <input type="text" id="ai-in" placeholder="Chiedi all'Agente..." onkeydown="if(event.key==='Enter')askTormenta()">
+        <button class="send-btn" onclick="askTormenta()">📨</button>
+        <button class="mic-btn" onclick="voiceAskTormenta()">🎤</button>
+      </div>
+    </div>
+  </div>
+  <div class="overlay hidden" id="overlay" onclick="closeAllPanels()"></div>
+  <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">🔊</button>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/game.js"></script>
+</body>
+</html>
